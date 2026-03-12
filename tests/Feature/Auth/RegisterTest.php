@@ -1,35 +1,52 @@
 <?php
 
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 
-uses(RefreshDatabase::class);
+/**
+ * Configuración global para este archivo de pruebas.
+ * RefreshDatabase: Reinicia la base de datos en cada test para que esté limpia.
+ * WithoutMiddleware: Desactiva capas de seguridad como el CSRF para facilitar el testing de POSTs.
+ */
+uses(
+    RefreshDatabase::class,
+    WithoutMiddleware::class
+);
 
+/**
+ * Test de humo (Smoke Test) para verificar que la ruta de registro carga.
+ */
 test('la página de registro se muestra correctamente', function () {
+    // Realiza una petición GET a la ruta nombrada 'auth.register'
     $response = $this->get(route('auth.register'));
 
-    // Verificamos que el servidor responde con un código 200 (OK)
+    // Verifica que el servidor devuelva un código 200 (éxito)
     $response->assertStatus(200);
 });
 
-/*it('permite registrar un usuario', function () {
-    // Arrange: Preparamos los datos del usuario 
+/**
+ * Test funcional para verificar el flujo completo de creación de usuario.
+ */
+test('permite registrar un usuario', function () {
+    // Desactiva el manejo de excepciones de Laravel para ver el error real en consola si algo falla
+    $this->withoutExceptionHandling();
+
+    // Definimos el set de datos que simulan lo que el usuario escribe en el formulario
     $userData = [
-        'name' => 'admin',
+        'name' => 'Admin',
         'email' => 'admin@pugsa.com',
         'password' => 'Admin123',
+        'password_confirmation' => 'Admin123', // Debe coincidir con 'password' para pasar la validación
     ];
 
-    // Act: Simulamos la petición POST a la ruta de registro 
-    $response = $this->post('/register', $userData);
+    // Envía una petición POST a la ruta de registro con los datos del usuario
+    $response = $this->post(route('auth.register'), $userData);
 
-    // Assert: Verificamos el resultado esperado 
-    // Comprobamos que redirige tras el éxito
-    $response->assertRedirect('/login');
+    // Verifica que, tras el registro exitoso, el sistema nos redirija a la página de login
+    $response->assertRedirect(route('auth.login'));
 
-    // Verificamos que el usuario realmente se guardó en la base de datos
+    // Consulta la base de datos para asegurar que el registro realmente se guardó
     $this->assertDatabaseHas('users', [
         'email' => 'admin@pugsa.com',
-        'name' => 'admin',
     ]);
-});*/
+});
