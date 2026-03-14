@@ -45,3 +45,26 @@ test('autenticar un usuario correctamente', function () {
     $this->assertAuthenticatedAs($user);
     $response->assertRedirect(route('dashboard'));
 });
+
+test('un usuario autenticado puede cerrar sesión', function () {
+    // Desactiva el manejo de excepciones de Laravel para ver el error real en consola si algo falla
+    $this->withoutExceptionHandling();
+
+    // Creamos un usuario y lo autenticamos en la aplicación
+    $user = User::factory()->create();
+
+    // El helper actingAs() simula que este usuario ya inició sesión
+    $this->actingAs($user);
+
+    // (Opcional) Verificamos que efectivamente está logueado antes de continuar
+    $this->assertAuthenticatedAs($user);
+
+    // Simulamos la petición POST a la ruta de logout
+    $response = $this->post(route('auth.logout'));
+
+    // Confirmamos que el usuario ya no está autenticado
+    $this->assertGuest();
+
+    // Confirmamos que redirige a la página login
+    $response->assertRedirect(route('auth.login'));
+});

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -28,17 +28,11 @@ class AuthController extends Controller
     }
 
 
-    public function authLogin(Request $request)
+    public function authLogin(LoginRequest $request)
     {
-        // Validamos que los campos vengan en la petición
-        $credentials = $request->validate([
-            'email' => ['required', 'email:filter'],
-            'password' => ['required'],
-        ]);
-
         // Intentamos autenticar al usuario
-        if (Auth::attempt($credentials)) {
-            // Redirigimos a la ruta esperada por nuestro test de éxito
+        if (Auth::attempt($request->validated())) {
+            // Redirigimos a la ruta esperada por nuestro éxito
             return to_route('dashboard');
         }
 
@@ -51,5 +45,12 @@ class AuthController extends Controller
     public function index()
     {
         return view(route('dashboard'));
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+
+        return to_route('auth.login');
     }
 }

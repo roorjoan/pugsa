@@ -8,3 +8,4 @@ Route::post('/register', [AuthController::class, 'store']);
 Route::get('/', [AuthController::class, 'login'])->name('auth.login');
 Route::post('/', [AuthController::class, 'authLogin']);
 Route::get('/dashboard', [AuthController::class, 'index'])->name('dashboard');
+Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
