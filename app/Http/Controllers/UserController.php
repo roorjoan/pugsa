@@ -18,4 +18,11 @@ class UserController extends Controller
 
         return to_route('users.index');
     }
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+
+        return to_route('users.index')->with('msg', 'Usuario eliminado correctamente.');
+    }
 }

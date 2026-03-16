@@ -41,3 +41,14 @@ test('permite crear un usuario', function () {
         'email' => 'user@pugsa.com',
     ]);
 });
+
+test('se puede eliminar un usuario', function () {
+    $user = User::factory()->create();
+
+    $response = $this->delete(route('users.destroy', $user));
+
+    $response->assertRedirect(route('users.index'));
+
+    // Verificamos que no esta el usuario que fue eliminado
+    $this->assertDatabaseMissing('users', ['id' => $user]);
+});
