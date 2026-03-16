@@ -44,7 +44,7 @@ class AuthController extends Controller
 
     public function index()
     {
-        return view(route('dashboard'));
+        return view('dashboard');
     }
 
     public function logout()
