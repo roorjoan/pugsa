@@ -1,18 +1,13 @@
 <?php
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 /**
  * Configuración global para este archivo de pruebas.
- * RefreshDatabase: Reinicia la base de datos en cada test para que esté limpia.
  * WithoutMiddleware: Desactiva capas de seguridad como el CSRF para facilitar el testing de POSTs.
  */
-uses(
-    RefreshDatabase::class,
-    WithoutMiddleware::class
-);
+uses(WithoutMiddleware::class);
 
 /**
  * Test de humo (Smoke Test) para verificar que la ruta de login carga.

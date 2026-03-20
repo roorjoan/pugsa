@@ -8,5 +8,8 @@
 </head>
 <body>
     crud usuarios
+    @foreach ($users as $user)
+        <p>{{ $user->name }}</p>
+    @endforeach
 </body>
 </html>

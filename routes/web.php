@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/register', [AuthController::class, 'create'])->name('auth.register');
@@ -12,3 +13,4 @@ Route::get('/dashboard', [AuthController::class, 'index'])->name('dashboard');
 Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
 Route::resource('users', UserController::class);
+Route::resource('services', ServiceController::class);
