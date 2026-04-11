@@ -2,64 +2,43 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Service\StoreServiceRequest;
+use App\Http\Requests\Service\UpdateServiceRequest;
 use App\Models\Service;
 
 class ServiceController extends Controller
 {
+    // Devuelve todos los servicios con sus usuarios paginados
     public function index()
     {
-        $services = Service::with('users')->get();
+        $services = Service::with('users')->paginate(10);
+
         return view('services.index', compact('services'));
     }
 
-    public function create()
+    // Crea un nuevo servicio. Recibe un request con los datos del servicio
+    public function store(StoreServiceRequest $request)
     {
-        return view('services.create');
+        Service::create($request->validated());
+
+        return to_route('services.index')->with('msg', 'Servicio creado correctamente.');
     }
 
-    public function store(Request $request)
+    // Actualiza un servicio. Recibe un request con los datos del servicio y el id del servicio
+    public function update(UpdateServiceRequest $request, $id)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'type' => 'required|in:web,app',
-            'icon' => 'nullable|string|max:255',
-            'path' => 'required|string|max:255',
-            'description' => 'required|string',
-        ]);
+        $service = Service::find($id);
 
-        Service::create($validated);
+        $service->update($request->validated());
 
-        return to_route('services.index');
+        return to_route('services.index')->with('msg', 'Servicio actualizado correctamente.');
     }
 
-    public function show(Service $service)
+    // Elimina un servicio. Recibe el id del servicio
+    public function destroy($id)
     {
-        $service->load('users');
-        return view('services.show', compact('service'));
-    }
+        $service = Service::find($id);
 
-    public function edit(Service $service)
-    {
-        return view('services.edit', compact('service'));
-    }
-
-    public function update(Request $request, Service $service)
-    {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'type' => 'required|in:web,app',
-            'icon' => 'nullable|string|max:255',
-            'path' => 'required|string|max:255',
-            'description' => 'required|string',
-        ]);
-
-        $service->update($validated);
-
-        return to_route('services.index');
-    }
-
-    public function destroy(Service $service)
-    {
         $service->delete();
 
         return to_route('services.index')->with('msg', 'Servicio eliminado correctamente.');

@@ -26,7 +26,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        $user->update($request->validated());        //dd($user->name);
+        $user->update($request->validated());
 
         return to_route('users.index')->with('msg', 'Usuario actualizado correctamente.');
     }

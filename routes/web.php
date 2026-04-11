@@ -12,5 +12,5 @@ Route::post('/', [AuthController::class, 'authLogin']);
 Route::get('/dashboard', [AuthController::class, 'index'])->name('dashboard');
 Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
-Route::resource('users', UserController::class);
-Route::resource('services', ServiceController::class);
+Route::resource('users', UserController::class)->only(['index', 'store', 'update', 'destroy']);
+Route::resource('services', ServiceController::class)->only(['index', 'store', 'update', 'destroy']);
