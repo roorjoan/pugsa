@@ -10,24 +10,38 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function create()
-    {
-        return view('auth.register');
-    }
 
-    public function store(RegisterRequest $request)
-    {
-        User::create($request->validated());
-
-        return to_route('auth.login');
-    }
-
+    // muestra la vista de login
     public function login()
     {
+        /* if (Auth::check()) {
+            return to_route('dashboard');
+        } */
+
         return view('auth.login');
     }
 
+    // muestra la vista de registro
+    public function register()
+    {
+        /* if (Auth::check()) {
+            return to_route('dashboard');
+        } */
 
+        return view('auth.register');
+    }
+
+    // crea un nuevo usuario
+    public function store(RegisterRequest $request)
+    {
+        $user = User::create($request->validated());
+        //asignar rol por defecto usuario
+        $user->syncRoles('user');
+
+        return to_route('auth.login')->with('msg', 'Usuario creado correctamente.');
+    }
+
+    // autentica al usuario
     public function authLogin(LoginRequest $request)
     {
         // Intentamos autenticar al usuario
@@ -42,15 +56,17 @@ class AuthController extends Controller
         ])->onlyInput('email');
     }
 
+    // muestra la vista de dashboard
     public function index()
     {
         return view('dashboard');
     }
 
+    // cierra la sesión del usuario
     public function logout()
     {
         Auth::logout();
 
-        return to_route('auth.login');
+        return to_route('auth.login')->with('msg', 'Sesión cerrada correctamente.');
     }
 }

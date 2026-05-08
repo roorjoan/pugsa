@@ -25,6 +25,7 @@ class UpdateUserRequest extends FormRequest
             'name'  => ['required', 'string', 'max:255'],
             'email' => ['required', 'email:filter','unique:users,email,' . $this->user],
             'password' => 'sometimes|nullable|min:8',
+            'role_id' => 'required|exists:roles,id'
         ];
     }
 }
