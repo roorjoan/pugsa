@@ -17,19 +17,32 @@ class UserController extends Controller
         return view('users.index', compact('users', 'roles'));
     }
 
+    public function create()
+    {
+        return view('users.create');
+    }
+
     public function store(CreateUserRequest $request)
     {
         $user = User::create($request->validated());
-        $user->syncRoles($request->role_id);/* Asigna el rol al usuario */
+        // Asigna un rol por defecto al usuario
+        $user->assignRole("user");
 
         return to_route('users.index')->with('msg', 'Usuario creado correctamente.');
     }
 
-    public function update(UpdateUserRequest $request, $id)
+    public function edit(User $user)
     {
-        $user = User::find($id);
+        $roles = Role::all();
+        //dd($roles);
+        return view('users.edit', compact('user', 'roles'));
+    }
+
+    public function update(UpdateUserRequest $request, User $user)
+    {
         $user->update($request->validated());
-        $user->syncRoles($request->role_id);/* Asigna el rol al usuario */
+        // Actualiza el rol del usuario al nuevo rol seleccionado
+        $user->syncRoles($request->role);
 
         return to_route('users.index')->with('msg', 'Usuario actualizado correctamente.');
     }
@@ -41,16 +54,10 @@ class UserController extends Controller
         return to_route('users.index')->with('msg', 'Usuario eliminado correctamente.');
     }
 
-    public function assignServices(User $user, Request $request)
+    /*public function assignServices(User $user, Request $request)
     {
         $user->syncServices($request->services);
         return to_route('users.index')->with('msg', 'Servicios asignados correctamente.');
-    }
-
-    // Asigna un rol a un usuario 
-    public function assignRole(User $user, Request $request)
-    {
-        $user->syncRoles($request->role);
-        return to_route('users.index')->with('msg', 'Role asignado correctamente.');
-    }
+    }*/
 }
+

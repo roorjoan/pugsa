@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
             RoleAndPermissionSeeder::class,
         ]);
 
-        // Opcional: Crear un usuario de prueba y asignarle el rol
+        // Crear un usuario de prueba y asignarle el rol
         $admin = User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@example.com',
@@ -22,5 +22,13 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $admin->assignRole('administrator');
+
+        $user = User::factory()->create([
+            'name' => 'User',
+            'email' => 'user@example.com',
+            'password' => bcrypt('User123'),
+        ]);
+
+        $user->assignRole('user');
     }
 }

@@ -18,6 +18,7 @@
     </style>
     {{-- Adicionamos vite para que compile los archivos de tailwind y daisyui --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
 </head>
 
 <body class="bg-slate-100 min-h-screen flex items-center justify-center p-4 sm:p-8">

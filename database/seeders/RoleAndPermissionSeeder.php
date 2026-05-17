@@ -43,9 +43,11 @@ class RoleAndPermissionSeeder extends Seeder
             Permission::create(['name' => $permissionName]);
         }
 
-        // 3. Crear el rol User y Administrator
+        // 3. Crear los roles
         $userRole = Role::create(['name' => 'user']);
         $adminRole = Role::create(['name' => 'administrator']);
+        $espRole = Role::create(['name' => 'especialista']);
+        $dirRole = Role::create(['name' => 'director']);
 
         // 4. Asignar TODOS los permisos creados al administrador
         // Spatie permite pasar un array de nombres de permisos directamente
@@ -53,6 +55,16 @@ class RoleAndPermissionSeeder extends Seeder
 
         // 5. Asignar permisos específicos al rol User
         $userRole->givePermissionTo([
+            'listar servicios',
+        ]);
+
+        // 6. Asignar permisos específicos al rol Especialista
+        $espRole->givePermissionTo([
+            'listar servicios',
+        ]);
+
+        // 7. Asignar permisos específicos al rol Director
+        $dirRole->givePermissionTo([
             'listar servicios',
         ]);
     }
