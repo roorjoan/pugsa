@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Gestion de usuarios')
+@section('title', 'Gestión de usuarios')
 
 @section('content')
     <div class="max-w-6xl mx-auto">
@@ -32,7 +32,6 @@
                             <th class="px-6 py-4 font-semibold">Usuario</th>
                             <th class="px-6 py-4 font-semibold">Contacto</th>
                             <th class="px-6 py-4 font-semibold">Rol</th>
-                            <!--<th class="px-6 py-4 font-semibold">Acceso</th>!-->
                             <th class="px-6 py-4 font-semibold text-right">Acciones</th>
                         </tr>
                     </thead>
@@ -46,7 +45,7 @@
                                         <div class="avatar placeholder">
                                             <div class="bg-[#1e3a8a] text-white rounded-full w-10 h-10 font-bold">
                                                 <!-- Generar dos letras aleatorias en mayusculas -->
-                                                <span>{{ strtoupper(substr($user->name ?? 'No tiene nombre', 0, 1)) . strtoupper(substr($user->name ?? 'No tiene nombre', -1)) }}</span>
+                                                <span>{{ strtoupper(substr($user->name, 0, 1)) . strtoupper(substr($user->name, -1)) }}</span>
                                             </div>
                                         </div>
                                         <div>
@@ -65,34 +64,34 @@
                                             class="badge bg-indigo-50 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 font-bold border-none px-3 py-3 rounded-md text-xs">{{ $role->name }}</span>
                                     @endforeach
                                 </td>
-                                <!--{{-- aqui va un boton naranja con el nombre "Asignar rol" que abre un modal para asignar el rol al usuario --}}
-                                <td class="px-6 py-4">
-                                    <a href="#" class="btn btn-warning btn-sm text-white hover:bg-warning/80 mr-1 px-3">
-                                        Asignar rol
-                                    </a>
-                                </td>!-->
-                                <td class="px-6 py-4 text-right">
-                                    <a href="{{ route('users.edit', $user) }}"
-                                        class="btn btn-ghost btn-sm btn-square text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 mr-1">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
-                                            </path>
-                                        </svg>
-                                    </a>
-                                    {{-- aqui va un link con forma de papelera para eliminar el usuario, no modal --}}
-                                    <form action="{{ route('users.destroy', $user) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                            onclick="return confirm('¿Estas seguro de eliminar este usuario?')"
-                                            class="btn btn-ghost btn-sm btn-square text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 mr-1">
+                                {{-- Boton para eliminar --}}
+                                <td class="px-4 py-4 text-right">
+                                    <div class="flex items-center justify-end gap-1">
+                                        <a href="{{ route('users.edit', $user) }}"
+                                            class="btn btn-ghost btn-sm btn-square text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
-                                            </path>
-                                        </svg>
-                                    </a>
+                                                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
+                                                </path>
+                                            </svg>
+                                        </a>
+
+                                        <form action="{{ route('users.destroy', $user) }}" method="POST"
+                                            class="inline-block">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                onclick="return confirm('¿Estás seguro que deseas eliminar este usuario?')"
+                                                class="btn btn-ghost btn-sm btn-square text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                                    </path>
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach

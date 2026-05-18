@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Gestionar usuarios')
+@section('title', 'Gestión de usuarios')
 
 @section('content')
     <!-- Formulario de creación de usuario -->

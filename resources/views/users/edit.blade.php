@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Editar usuarios')
+@section('title', 'Gestión de usuarios')
 
 @section('content')
-    <!-- Formulario de creación de usuario -->
+    <!-- Formulario de edición de usuario -->
     <div class="min-h-screen bg-base-200/50 p-6 flex flex-col justify-start items-start gap-6">
         <div class="border-b border-base-300 w-full pb-4 mb-2">
-            <p class="text-sm text-base-content/60 mt-1">Edita un usuario de la plataforma</p>
+            <p class="text-sm text-base-content/60 mt-1">Edita un usuario en la plataforma</p>
         </div>
 
         <div class="card w-full max-w-xl bg-base-100 shadow-sm border border-base-200">
