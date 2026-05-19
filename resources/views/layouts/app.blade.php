@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--! favicon -->
-    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}" />
+    <link rel="icon" href="{{ asset('favicon.ico') }}">
     <title>@yield('title') - UNE Granma</title>
 
     <!-- Tailwind CSS -->
@@ -166,7 +166,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('dashboard') }}"
+                            <a href="{{ route('services.index') }}"
                                 class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors text-slate-600 dark:text-slate-300 font-medium">
                                 <svg width="24px" height="24px" viewBox="0 0 48 48" id="a"
                                     xmlns="http://www.w3.org/2000/svg" fill="#000000" stroke="#000000"

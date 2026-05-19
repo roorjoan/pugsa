@@ -9,11 +9,16 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ServiceFactory extends Factory
 {
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
     public function definition(): array
     {
         return [
             'name'        => fake()->words(3, true),
-            'type'        => fake()->randomElement(['web', 'app']),
+            'type'        => fake()->randomElement(['web', 'application']),
             'icon'        => fake()->optional()->word(),
             'path'        => '/' . fake()->slug(2),
             'description' => fake()->sentence(),

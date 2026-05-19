@@ -100,13 +100,8 @@
             </div>
 
             <!-- Paginación Footer -->
-            <div
-                class="bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 px-6 py-4 flex flex-col sm:flex-row items-right justify-between gap-4 transition-colors duration-300">
-                <p class="text-sm text-slate-500 dark:text-slate-400 font-medium items-right">
-                </p>
-                <div class="join items-left">
-                    {{ $users->links() }}
-                </div>
+            <div class="px-6 py-4 border-t border-base-200 bg-base-100 rounded-b-xl">
+                {{ $users->links() }}
             </div>
         </div>
     </div>
