@@ -17,7 +17,7 @@ class User extends Authenticatable
      * The attributes that are mass assignable.
      *
      * @var list<string>
-     */ 
+     */
     protected $fillable = [
         'name',
         'email',
@@ -51,5 +51,11 @@ class User extends Authenticatable
     public function services()
     {
         return $this->belongsToMany(Service::class);
+    }
+
+    // Relacion de uno a muchos con solicitud de cuentas del dominio
+    public function domainRequests()
+    {
+        return $this->hasMany(DomainAccountRequest::class);
     }
 }

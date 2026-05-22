@@ -32,7 +32,12 @@ class RoleController extends Controller
             $role->syncPermissions($validated['permissions']);
         }
 
-        return to_route('roles.index')->with('msg', 'Rol creado y permisos asignados correctamente.');
+        notify()
+            ->success()
+            ->title('Rol creado correctamente.')
+            ->send();
+
+        return to_route('roles.index');
     }
 
     // Nuevo método para mostrar el formulario de edición
@@ -55,13 +60,23 @@ class RoleController extends Controller
         // syncPermissions quita los permisos que no estén en el array y añade los nuevos
         $role->syncPermissions($request->permissions ?? []);
 
-        return to_route('roles.index')->with('msg', 'Rol actualizado correctamente.');
+        notify()
+            ->success()
+            ->title('Rol actualizado correctamente.')
+            ->send();
+
+        return to_route('roles.index');
     }
 
     public function destroy(Role $role)
     {
         $role->delete();
 
-        return to_route('roles.index')->with('msg', 'Rol eliminado correctamente.');
+        notify()
+            ->success()
+            ->title('Rol eliminado correctamente.')
+            ->send();
+
+        return to_route('roles.index');
     }
 }

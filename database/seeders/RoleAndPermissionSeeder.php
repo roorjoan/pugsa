@@ -14,7 +14,7 @@ class RoleAndPermissionSeeder extends Seeder
         // Limpiar el caché de permisos de Spatie (Muy importante antes de empezar)
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // 1. Definir lista de permisos
+        // Definir lista de permisos
         $permissions = [
             // Usuarios
             'listar usuarios',
@@ -36,36 +36,42 @@ class RoleAndPermissionSeeder extends Seeder
             'crear permisos',
             'editar permisos',
             'eliminar permisos',
+            // Otros permisos
+            'listar solicitudes',
+            'crear solicitudes',
         ];
 
-        // 2. Crear los permisos en la base de datos
+        // Crear los permisos en la base de datos
         foreach ($permissions as $permissionName) {
             Permission::create(['name' => $permissionName]);
         }
 
-        // 3. Crear los roles
+        // Crear los roles
         $userRole = Role::create(['name' => 'user']);
         $adminRole = Role::create(['name' => 'administrator']);
         $espRole = Role::create(['name' => 'especialista']);
         $dirRole = Role::create(['name' => 'director']);
 
-        // 4. Asignar TODOS los permisos creados al administrador
+        // Asignar TODOS los permisos creados al administrador
         // Spatie permite pasar un array de nombres de permisos directamente
         $adminRole->givePermissionTo(Permission::all());
 
-        // 5. Asignar permisos específicos al rol User
+        // Asignar permisos específicos al rol User
         $userRole->givePermissionTo([
             'listar servicios',
+            'crear solicitudes',
         ]);
 
-        // 6. Asignar permisos específicos al rol Especialista
+        // Asignar permisos específicos al rol Especialista
         $espRole->givePermissionTo([
             'listar servicios',
+            'crear solicitudes',
         ]);
 
-        // 7. Asignar permisos específicos al rol Director
+        // Asignar permisos específicos al rol Director
         $dirRole->givePermissionTo([
             'listar servicios',
+            'crear solicitudes',
         ]);
     }
 }

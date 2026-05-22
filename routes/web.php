@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\DomainAccountRequestController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\RoleController;
@@ -23,4 +24,9 @@ Route::resource('services', ServiceController::class);
 Route::resource('roles', RoleController::class);
 
 Route::resource('permissions', PermissionController::class);
+
+Route::get('/domain-requests/create', [DomainAccountRequestController::class, 'create'])->name('domain-requests.create');
+Route::post('/domain-requests', [DomainAccountRequestController::class, 'store'])->name('domain-requests.store');
+Route::get('/domain-requests', [DomainAccountRequestController::class, 'index'])->name('domain-requests.index');
+Route::patch('/domain-requests/{domainRequest}/update', [DomainAccountRequestController::class, 'update'])->name('domain-requests.update');
 //});

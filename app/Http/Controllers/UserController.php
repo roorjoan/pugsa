@@ -44,7 +44,12 @@ class UserController extends Controller
         // Asigna un rol por defecto al usuario
         $user->assignRole("user");
 
-        return to_route('users.index')->with('msg', 'Usuario creado correctamente.');
+        notify()
+            ->success()
+            ->title('Usuario creado correctamente.')
+            ->send();
+
+        return to_route('users.index');
     }
 
     /**
@@ -73,7 +78,12 @@ class UserController extends Controller
         // Actualiza el rol del usuario al nuevo rol seleccionado
         $user->syncRoles($request->role);
 
-        return to_route('users.index')->with('msg', 'Usuario actualizado correctamente.');
+        notify()
+            ->success()
+            ->title('Usuario actualizado correctamente.')
+            ->send();
+
+        return to_route('users.index');
     }
 
     /**
@@ -86,6 +96,11 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return to_route('users.index')->with('msg', 'Usuario eliminado correctamente.');
+        notify()
+            ->success()
+            ->title('Usuario eliminado correctamente.')
+            ->send();
+
+        return to_route('users.index');
     }
 }

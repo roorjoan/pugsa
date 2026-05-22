@@ -51,10 +51,15 @@ class ServiceController extends Controller
 
         //dd($validated);
 
-        // 3. Crear el servicio con el array limpio y modificado
+        // Crear el servicio con el array limpio y modificado
         Service::create($validated);
 
-        return to_route('services.index')->with('msg', 'Servicio creado correctamente.');
+        notify()
+            ->success()
+            ->title('Servicio creado correctamente.')
+            ->send();
+
+        return to_route('services.index');
     }
 
     /**
@@ -96,7 +101,12 @@ class ServiceController extends Controller
         $userIds = $request->input('user_ids', []);
         $service->users()->sync($userIds);
 
-        return to_route('services.index')->with('msg', 'Servicio actualizado correctamente.');
+        notify()
+            ->success()
+            ->title('Servicio actualizado correctamente.')
+            ->send();
+
+        return to_route('services.index');
     }
 
     /**
@@ -109,6 +119,13 @@ class ServiceController extends Controller
     {
         $service->delete();
 
-        return to_route('services.index')->with('msg', 'Servicio eliminado correctamente.');
+        Storage::disk('public')->delete($service->icon);
+
+        notify()
+            ->success()
+            ->title('Servicio eliminado correctamente.')
+            ->send();
+
+        return to_route('services.index');
     }
 }
