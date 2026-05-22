@@ -3,7 +3,7 @@
 @section('title', 'Gestión de Servicios')
 
 @section('content')
-    <div class="p-6">
+    <div class="p-4">
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-base-content tracking-tight">Administra los servicios del sistema</h1>
             <a href="{{ route('services.create') }}"

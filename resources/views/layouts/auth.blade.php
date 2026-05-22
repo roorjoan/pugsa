@@ -4,21 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--! favicon -->
-    <link rel="icon" href="{{ asset('favicon.ico') }}">
+
     <title>@yield('title') - UNE Granma</title>
-
-    {{-- <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" /> --}}
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
-
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-    </style>
-    {{-- Adicionamos vite para que compile los archivos de tailwind y daisyui --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 </head>

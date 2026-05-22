@@ -3,7 +3,7 @@
 @section('title', 'Gestión de Servicios')
 
 @section('content')
-    <div class="p-6">
+    <div class="p-4">
         <div class="mb-6 border-b border-base-300 pb-4">
             <p class="text-sm text-base-content/60">Registra un nuevo servicio en la plataforma.</p>
         </div>
@@ -47,7 +47,8 @@
                             <label class="label pb-1.5" for="path">
                                 <span class="label-text font-medium">Ruta (Path)</span>
                             </label>
-                            <input type="text" id="path" name="path" placeholder="Ej. /ejecutable.exe o https://..."
+                            <input type="text" id="path" name="path"
+                                placeholder="Ej. /ejecutable.exe o https://..."
                                 class="input input-bordered w-full focus:input-primary transition-all @error('path') input-error @enderror"
                                 value="{{ old('path') }}" />
                             @error('path')
@@ -59,35 +60,42 @@
 
                     <div class="form-control w-full">
                         <label class="label pb-1.5" for="icon">
-                            <span class="label-text font-medium">Icono <span
+                            <span class="label-text font-medium">Icono del servicio <span
                                     class="text-base-content/50 font-normal">(Opcional)</span></span>
                         </label>
-                        <input type="file" id="icon" name="icon" placeholder="Ej. heroicon-o-briefcase"
-                            class="input input-bordered w-full focus:input-primary transition-all @error('icon') input-error @enderror"
-                            value="{{ old('icon') }}" accept="image/*"/>
+
+                        <input type="file" id="icon" name="icon"
+                            class="file-input file-input-bordered w-full focus:file-input-primary transition-all @error('icon') file-input-error @enderror"
+                            accept="image/*" />
+
                         @error('icon')
                             <label class="label pt-1"><span
                                     class="label-text-alt text-error font-medium">{{ $message }}</span></label>
                         @enderror
                     </div>
 
-                    <div class="form-control w-full">
+                    <div class="form-control w-full mt-4">
                         <label class="label pb-1.5" for="description">
-                            <span class="label-text font-medium">Descripción <span
-                                    class="text-base-content/50 font-normal">(Opcional)</span></span>
+                            <span class="label-text font-medium text-base-content/80">
+                                Descripción <span class="text-base-content/40 font-normal">(Opcional)</span>
+                            </span>
                         </label>
-                        <textarea id="description" name="description" placeholder="Describe la funcionalidad de este servicio..."
-                            class="textarea textarea-bordered h-24 focus:textarea-primary transition-all @error('description') textarea-error @enderror">{{ old('description') }}</textarea>
+
+                        <textarea id="description" name="description" rows="3"
+                            placeholder="Escribe una breve descripción sobre el servicio..."
+                            class="textarea textarea-bordered w-full focus:textarea-primary transition-all resize-none @error('description') textarea-error @enderror">{{ old('description', $service->description ?? '') }}</textarea>
+
                         @error('description')
-                            <label class="label pt-1"><span
-                                    class="label-text-alt text-error font-medium">{{ $message }}</span></label>
+                            <label class="label pt-1">
+                                <span class="label-text-alt text-error font-medium">{{ $message }}</span>
+                            </label>
                         @enderror
                     </div>
 
                     <div class="flex items-center justify-end gap-4 mt-8">
                         <a href="{{ route('services.index') }}"
                             class="text-base-content/70 hover:text-base-content font-medium text-sm px-4">
-                            Atrás
+                            Cancelar
                         </a>
                         <button type="submit"
                             class="btn bg-[#5b21b6] hover:bg-[#4c1d95] text-white border-none px-6 font-semibold shadow-sm rounded-lg">

@@ -6,6 +6,7 @@ use App\Http\Requests\Service\StoreServiceRequest;
 use App\Http\Requests\Service\UpdateServiceRequest;
 use App\Models\Service;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class ServiceController extends Controller
 {
@@ -16,7 +17,7 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services = Service::paginate(10);
+        $services = Service::latest()->paginate(10);
 
         return view('services.index', compact('services'));
     }
@@ -69,7 +70,7 @@ class ServiceController extends Controller
     }
 
     /**
-     * Actualiza el servicio y asigna el servicio a un usuario. Recibe un request con los datos del servicio.
+     * Actualiza el servicio y asigna una lista de usuarios al servicio
      *
      * @param  \App\Http\Requests\Service\UpdateServiceRequest  $request
      * @param  \App\Models\Service  $service
@@ -77,9 +78,23 @@ class ServiceController extends Controller
      */
     public function update(UpdateServiceRequest $request, Service $service)
     {
-        $service->update($request->validated());
-        // Asignar el servicio al usuario
-        $service->users()->sync($request->user_id);
+        $validated = $request->validated();
+
+        // Procesar el archivo del icono solo si se subió uno nuevo
+        if ($request->hasFile('icon')) {
+            Storage::disk('public')->delete($service->icon);
+
+            // Almacena la nueva imagen en storage/app/public/icons
+            $validated['icon'] = $request->file('icon')->store('icons', 'public');
+        } else {
+            unset($validated['icon']);
+        }
+
+        $service->update($validated);
+
+        // Sincronizar los usuarios con el servicio
+        $userIds = $request->input('user_ids', []);
+        $service->users()->sync($userIds);
 
         return to_route('services.index')->with('msg', 'Servicio actualizado correctamente.');
     }

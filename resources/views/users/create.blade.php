@@ -4,7 +4,7 @@
 
 @section('content')
     <!-- Formulario de creación de usuario -->
-    <div class="min-h-screen bg-base-200/50 p-6 flex flex-col justify-start items-start gap-6">
+    <div class="min-h-screen bg-base-200/50 p-4 flex flex-col justify-start items-start gap-6">
         <div class="border-b border-base-300 w-full pb-4 mb-2">
             <p class="text-sm text-base-content/60 mt-1">Registra una nueva cuenta en la plataforma.</p>
         </div>
@@ -58,7 +58,7 @@
 
                     <div class="card-actions justify-end pt-4 border-t border-base-200 mt-6">
                         <a href="{{ route('users.index') }}" class="btn btn-ghost font-medium">
-                            Atrás
+                            Cancelar
                         </a>
                         <button type="submit" class="btn btn-primary px-6 font-semibold shadow-sm">
                             Crear usuario

@@ -27,6 +27,10 @@ class UpdateServiceRequest extends FormRequest
             'icon'        => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             'path'        => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
+
+            // Validación para múltiples usuarios
+            'user_ids'   => ['nullable', 'array'],
+            'user_ids.*' => ['exists:users,id'],
         ];
     }
 }

@@ -11,7 +11,7 @@ class RoleController extends Controller
     public function index()
     {
         // Eager loading de 'permissions' para que la tabla cargue rápido
-        $roles = Role::with('permissions')->paginate(10);
+        $roles = Role::with('permissions')->latest()->paginate(10);
         $permissions = Permission::all(); // Traemos los permisos para el formulario
 
         return view('roles.index', compact('roles', 'permissions'));
