@@ -38,9 +38,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
 
     // Ruta para el chatbot de asistencia
-    //Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
-    //Route::post('/chat/ask', [ChatController::class, 'store'])->name('chat.store');
-    //Route::get('/chat/{id}', [ChatController::class, 'show'])->name('chat.show');
+    Route::get('/chat',               [ChatController::class, 'index'])->name('chat.index');
+    Route::post('/chat',              [ChatController::class, 'store'])->name('chat.store');
+    Route::get('/chat/check',         [ChatController::class, 'check'])->name('chat.check'); 
+    Route::get('/chat/{chatMessage}', [ChatController::class, 'show'])->name('chat.show');
 
     // Rutas para los reportes
     Route::get('/reports/audit', [ReportsController::class, 'index'])->name('reports.audit');

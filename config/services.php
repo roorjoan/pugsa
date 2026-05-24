@@ -13,6 +13,10 @@ return [
     | a conventional file to locate the various service credentials.
     |
     */
+    'ollama' => [
+        'url'   => env('OLLAMA_URL', 'http://localhost:11434'),
+        'model' => env('OLLAMA_MODEL', 'gemma3:270m'),
+    ],
 
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),

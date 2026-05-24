@@ -254,7 +254,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#"
+                            <a href="{{ route('chat.index') }}"
                                 class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-200 transition-colors text-slate-600 font-medium">
                                 <svg width="26px" height="26px" viewBox="0 0 16 16"
                                     xmlns="http://www.w3.org/2000/svg" fill="#4c4c4c" stroke="#4c4c4c"
@@ -481,6 +481,88 @@
         </aside>
     </div>
     @stack('scripts')
+    {{-- Polling de respuestas del chatbot --}}
+    @auth
+        <script>
+            (function() {
+                // Contenedor de toasts (se crea una sola vez)
+                function getContainer() {
+                    let c = document.getElementById('chat-toast-container');
+                    if (!c) {
+                        c = document.createElement('div');
+                        c.id = 'chat-toast-container';
+                        c.style.cssText =
+                            'position:fixed;top:1rem;right:1rem;z-index:9999;display:flex;flex-direction:column;gap:0.5rem;max-width:22rem;';
+                        document.body.appendChild(c);
+                    }
+                    return c;
+                }
+
+                function showToast(id, question) {
+                    const container = getContainer();
+
+                    const toast = document.createElement('div');
+                    toast.style.cssText =
+                        'background:#fff;border:1px solid #e5e7eb;border-left:4px solid #5b21b6;border-radius:0.75rem;padding:1rem;box-shadow:0 4px 24px rgba(0,0,0,0.10);display:flex;align-items:flex-start;gap:0.75rem;animation:slideIn 0.3s ease;';
+
+                    toast.innerHTML = `
+            <div style="width:2rem;height:2rem;border-radius:50%;background:#ede9fe;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="16" height="16" fill="none" stroke="#5b21b6" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                </svg>
+            </div>
+            <div style="flex:1;min-width:0;">
+                <p style="font-weight:700;font-size:0.8125rem;color:#1e293b;margin:0 0 0.125rem;">
+                    ✅ Respuesta lista
+                </p>
+                <p style="font-size:0.75rem;color:#64748b;margin:0 0 0.5rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                    ${question}
+                </p>
+                <a href="/chat/${id}"
+                   style="font-size:0.75rem;font-weight:700;color:#5b21b6;text-decoration:none;">
+                    Ver respuesta completa →
+                </a>
+            </div>
+            <button onclick="this.parentElement.remove()"
+                style="background:none;border:none;cursor:pointer;color:#9ca3af;font-size:1rem;line-height:1;padding:0;flex-shrink:0;">
+                ✕
+            </button>`;
+
+                    container.appendChild(toast);
+
+                    // Auto-cierra a los 12 segundos
+                    setTimeout(() => toast && toast.remove(), 12000);
+                }
+
+                // Polling cada 5 segundos
+                function poll() {
+                    fetch('{{ route('chat.check') }}', {
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest',
+                                'Accept': 'application/json',
+                            }
+                        })
+                        .then(r => r.ok ? r.json() : null)
+                        .then(data => {
+                            if (data && Array.isArray(data.completed)) {
+                                data.completed.forEach(msg => showToast(msg.id, msg.question));
+                            }
+                        })
+                        .catch(() => {}); // fallo silencioso si Ollama no responde
+                }
+
+                // Agregar animación CSS
+                const style = document.createElement('style');
+                style.textContent =
+                    '@keyframes slideIn{from{opacity:0;transform:translateX(1rem)}to{opacity:1;transform:translateX(0)}}';
+                document.head.appendChild(style);
+
+                setInterval(poll, 5000);
+            })
+            ();
+        </script>
+    @endauth
     <!-- Add Laravel Notify JavaScript -->
     @notifyJs
 </body>
