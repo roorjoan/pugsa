@@ -37,8 +37,8 @@
                                 class="select select-bordered w-full focus:select-primary @error('type') select-error @enderror">
                                 <option value="web" {{ old('type', $service->type) == 'web' ? 'selected' : '' }}>Web
                                 </option>
-                                <option value="application"
-                                    {{ old('type', $service->type) == 'application' ? 'selected' : '' }}>Aplicación</option>
+                                <option value="remoto" {{ old('type', $service->type) == 'remoto' ? 'selected' : '' }}>
+                                    Escritorio Remoto</option>
                             </select>
                             @error('type')
                                 <label class="label pt-1"><span

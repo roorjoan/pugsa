@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Service;
 use App\Models\User;
+use Database\Seeders\RoleAndPermissionSeeder;
+use Database\Seeders\ServiceSeeder;
 use Illuminate\Database\Seeder;
+use App\Models\Service;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,6 +15,7 @@ class DatabaseSeeder extends Seeder
         // Ejecutamos nuestro nuevo seeder
         $this->call([
             RoleAndPermissionSeeder::class,
+            ServiceSeeder::class,
         ]);
 
         // Crear un usuario de prueba y asignarle el rol
@@ -31,7 +34,5 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $user->assignRole('user');
-
-        //Service::factory(3)->create();
     }
 }

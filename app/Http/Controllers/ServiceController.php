@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ServiceAccessed;
 use App\Http\Requests\Service\StoreServiceRequest;
 use App\Http\Requests\Service\UpdateServiceRequest;
 use App\Models\Service;
@@ -127,5 +128,41 @@ class ServiceController extends Controller
             ->send();
 
         return to_route('services.index');
+    }
+
+    /**
+     * Ejecuta un servicio, registra el log de auditoría y redirige al usuario.
+     *
+     * @param  \App\Models\Service  $service
+     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     */
+    public function execute(Service $service)
+    {
+        // Disparamos el evento para la auditoría (Logs)
+        ServiceAccessed::dispatch($service);
+
+        // Manejo de portal WEB
+        if ($service->type === 'web') {
+            return redirect()->away($service->path);
+        }
+
+        // Manejo de ESCRITORIO REMOTO (MSTSC)
+        if ($service->type === 'remoto') {
+            // Construimos el contenido de un archivo RDP nativo de Windows
+            $rdpContent = "full address:s:{$service->path}\r\n";
+            $rdpContent .= "prompt for credentials:i:1\r\n";
+            $rdpContent .= "displayconnectionbar:i:1\r\n";
+            
+            // Nombre del archivo limpio (reemplaza espacios por guiones bajos)
+            $filename = str_replace(' ', '_', $service->name) . '.rdp';
+
+            // Forzamos la descarga. Al abrirlo, Windows lanzará mstsc automáticamente.
+            return response($rdpContent, 200, [
+                'Content-Type' => 'application/x-rdp',
+                'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+            ]);
+        }
+
+        return back();
     }
 }

@@ -235,7 +235,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('dashboard') }}"
+                            <a href="{{ route('logs.index') }}"
                                 class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-200 transition-colors text-slate-600 font-medium">
                                 <svg fill="#585858" width="24px" height="24px" viewBox="0 0 32.00 32.00"
                                     version="1.1" xmlns="http://www.w3.org/2000/svg" stroke="#000000"
@@ -254,7 +254,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('dashboard') }}"
+                            <a href="#"
                                 class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-200 transition-colors text-slate-600 font-medium">
                                 <svg width="26px" height="26px" viewBox="0 0 16 16"
                                     xmlns="http://www.w3.org/2000/svg" fill="#4c4c4c" stroke="#4c4c4c"
@@ -278,7 +278,7 @@
                                     <summary>REPORTES</summary>
                                     <ul>
                                         <li>
-                                            <a href="{{ route('dashboard') }}"
+                                            <a href="{{ route('reports.audit') }}"
                                                 class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-200 transition-colors text-slate-600 font-medium">
                                                 <svg fill="#4c4c4c" width="30px" height="30px"
                                                     viewBox="0 0 32 32" id="icon"
@@ -306,11 +306,11 @@
                                                             width="32" height="32"></rect>
                                                     </g>
                                                 </svg>
-                                                Estadísticas de los servicios
+                                                Comportamiento de los usuarios
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="{{ route('dashboard') }}"
+                                            <a href="#"
                                                 class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-200 transition-colors text-slate-600 font-medium">
                                                 <svg fill="#4c4c4c" width="24px" height="24px"
                                                     viewBox="0 0 32 32" id="icon"
@@ -342,7 +342,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="{{ route('dashboard') }}"
+                                            <a href="{{ route('reports.trends') }}"
                                                 class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-200 transition-colors text-slate-600 font-medium">
                                                 <svg fill="#4c4c4c" width="26px" height="26px"
                                                     viewBox="0 0 32 32" id="icon"
@@ -374,7 +374,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="{{ route('dashboard') }}"
+                                            <a href="{{ route('reports.domain_requests') }}"
                                                 class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-200 transition-colors text-slate-600 font-medium">
                                                 <svg fill="#4c4c4c" width="34px" height="34px"
                                                     viewBox="0 0 32 32" id="icon"

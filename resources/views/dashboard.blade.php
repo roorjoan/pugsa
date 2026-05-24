@@ -58,7 +58,8 @@
                         </div>
 
                         <div class="p-5 pt-0">
-                            <a href="{{ url($service->path) }}"
+                            <a href="{{ route('services.execute', $service) }}"
+                                {{ $service->type === 'web' ? 'target="_blank"' : '' }}
                                 class="btn bg-[#5b21b6] hover:bg-[#4c1d95] text-white border-none w-full font-semibold rounded-lg shadow-sm group gap-2 transition-colors">
                                 Ejecutar
                                 <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200"

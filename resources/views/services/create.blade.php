@@ -34,7 +34,7 @@
                             <select id="type" name="type"
                                 class="select select-bordered w-full focus:select-primary @error('type') select-error @enderror">
                                 <option value="web" {{ old('type') == 'web' ? 'selected' : '' }}>Web</option>
-                                <option value="application" {{ old('type') == 'application' ? 'selected' : '' }}>Aplicación
+                                <option value="remoto" {{ old('type') == 'remoto' ? 'selected' : '' }}>Escritorio Remoto
                                 </option>
                             </select>
                             @error('type')

@@ -14,20 +14,12 @@ class AuthController extends Controller
     // muestra la vista de login
     public function login()
     {
-        /* if (Auth::check()) {
-            return to_route('dashboard');
-        } */
-
         return view('auth.login');
     }
 
     // muestra la vista de registro
     public function register()
     {
-        /* if (Auth::check()) {
-            return to_route('dashboard');
-        } */
-
         return view('auth.register');
     }
 

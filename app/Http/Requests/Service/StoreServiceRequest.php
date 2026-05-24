@@ -23,7 +23,7 @@ class StoreServiceRequest extends FormRequest
     {
         return [
             'name'        => ['required', 'string', 'max:255'],
-            'type'        => ['required', 'in:web,application'],
+            'type'        => ['required', 'in:web,remoto'],
             'icon'        => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             'path'        => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],

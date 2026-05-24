@@ -12,7 +12,7 @@ return new class extends Migration
         Schema::create('services', function (Blueprint $table) {
             $table->id(); // bigint PK
             $table->string('name', 255);
-            $table->enum('type', ['web', 'application']);
+            $table->enum('type', ['web', 'remoto']);
             $table->string('icon', 255)->nullable();
             $table->string('path', 255);
             $table->text('description')->nullable();

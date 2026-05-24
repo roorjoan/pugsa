@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
@@ -57,5 +58,11 @@ class User extends Authenticatable
     public function domainRequests()
     {
         return $this->hasMany(DomainAccountRequest::class);
+    }
+
+    // Relacion de uno a muchos con logs
+    public function logs(): HasMany
+    {
+        return $this->hasMany(Log::class);
     }
 }
