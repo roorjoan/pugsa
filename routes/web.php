@@ -43,4 +43,5 @@ Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
 Route::get('/reports/audit', [ReportsController::class, 'index'])->name('reports.audit');
 Route::get('/reports/trends', [ReportsController::class, 'getServiceTrends'])->name('reports.trends');
 Route::get('/reports/domain-requests', [ReportsController::class, 'domainAccountRequests'])->name('reports.domain_requests');
+Route::get('/reports/usability', [ReportsController::class, 'usabilityCharts'])->name('reports.usability');
 //});

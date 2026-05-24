@@ -9,6 +9,7 @@ use App\Models\Service;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
+use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
 class ReportsController extends Controller
 {
@@ -183,5 +184,57 @@ class ReportsController extends Controller
             ->withQueryString();
 
         return view('reports.domain_requests', compact('startDate', 'endDate', 'stats', 'requestsList'));
+    }
+
+    // Permite obtener estadísticas graficas de uso de servicios
+    public function usabilityCharts(Request $request)
+    {
+        // Validación de fechas
+        $validator = Validator::make($request->all(), [
+            'start_date' => 'nullable|date|before_or_equal:today',
+            'end_date'   => 'nullable|date|after_or_equal:start_date|before_or_equal:today',
+        ], [
+            'start_date.before_or_equal' => 'La fecha de inicio debe ser hoy o anterior.',
+            'end_date.after_or_equal'    => 'La fecha de fin debe ser posterior a la de inicio.',
+            'end_date.before_or_equal'   => 'La fecha de fin no puede ser futura.',
+        ]);
+
+        if ($validator->fails()) {
+            notify()->error()->title('Error de fechas: ' . $validator->errors()->first())->send();
+            return back();
+        }
+
+        $startDate = $request->input('start_date', Carbon::now()->subDays(30)->toDateString());
+        $endDate   = $request->input('end_date', Carbon::now()->toDateString());
+
+        // Gráfico 1: Tendencia Diaria de Accesos (Línea)
+        $chartOptions1 = [
+            'chart_title'        => 'Tráfico de Accesos Diarios',
+            'report_type'        => 'group_by_date',
+            'model'              => 'App\Models\Log',
+            'group_by_field'     => 'created_at',
+            'group_by_period'    => 'day',
+            'aggregate_function' => 'count',
+            'chart_type'         => 'line',
+            'chart_color'        => '91, 33, 182', // RGB de tu color #5b21b6
+            // Inyectamos el filtro de fechas directamente en la consulta del paquete
+            'where_raw'          => "created_at BETWEEN '{$startDate} 00:00:00' AND '{$endDate} 23:59:59'",
+        ];
+        $lineChart = new LaravelChart($chartOptions1);
+
+        // Gráfico 2: Distribución de Uso por Servicio (Pastel)
+        $chartOptions2 = [
+            'chart_title'        => 'Top Servicios Utilizados',
+            'report_type'        => 'group_by_relationship',
+            'model'              => 'App\Models\Log',
+            'relationship_name'  => 'service', // Relación en tu modelo Log
+            'group_by_field'     => 'name',    // Campo de la tabla services
+            'aggregate_function' => 'count',
+            'chart_type'         => 'pie',
+            'where_raw'          => "created_at BETWEEN '{$startDate} 00:00:00' AND '{$endDate} 23:59:59' AND service_id IS NOT NULL",
+        ];
+        $pieChart = new LaravelChart($chartOptions2);
+
+        return view('reports.usability', compact('startDate', 'endDate', 'lineChart', 'pieChart'));
     }
 }

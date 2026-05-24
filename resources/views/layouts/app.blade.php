@@ -406,7 +406,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="{{ route('dashboard') }}"
+                                            <a href="{{ route('reports.usability') }}"
                                                 class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-200 transition-colors text-slate-600 font-medium">
                                                 <svg fill="#4c4c4c" width="24px" height="24px"
                                                     viewBox="0 0 32 32" id="icon"
@@ -480,6 +480,7 @@
                 </div>
         </aside>
     </div>
+    @stack('scripts')
     <!-- Add Laravel Notify JavaScript -->
     @notifyJs
 </body>
