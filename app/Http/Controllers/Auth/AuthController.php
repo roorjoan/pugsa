@@ -14,12 +14,22 @@ class AuthController extends Controller
     // muestra la vista de login
     public function login()
     {
+        // Si ya esta logeado 
+        if (Auth::check()) {
+            return to_route('dashboard');
+        }
+
         return view('auth.login');
     }
 
     // muestra la vista de registro
     public function register()
     {
+        // Si ya esta logeado 
+        if (Auth::check()) {
+            return to_route('dashboard');
+        }
+
         return view('auth.register');
     }
 

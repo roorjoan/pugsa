@@ -237,4 +237,21 @@ class ReportsController extends Controller
 
         return view('reports.usability', compact('startDate', 'endDate', 'lineChart', 'pieChart'));
     }
+
+    public function agents(Request $request)
+    {
+        $startDate = $request->start_date ?? now()->subDays(7)->format('Y-m-d');
+        $endDate = $request->end_date ?? now()->format('Y-m-d');
+
+        $logs = Log::whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $total = $logs->count() ?: 1;
+        $stats = $logs->groupBy('service_id')->map(function ($group) use ($total) {
+            return ($group->count() / $total) * 100;
+        });
+
+        return view('reports.agents', compact('logs', 'stats', 'startDate', 'endDate'));
+    }
 }
