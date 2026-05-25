@@ -20,13 +20,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [AuthController::class, 'index'])->name('dashboard');
     Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
-    Route::resource('users', UserController::class);
+    Route::resource('users', UserController::class)->middleware('role:administrator|editor');
 
-    Route::resource('services', ServiceController::class);
+    Route::resource('services', ServiceController::class)->middleware('role:administrator|editor');
 
-    Route::resource('roles', RoleController::class);
+    Route::resource('roles', RoleController::class)->middleware('role:administrator');
 
-    Route::resource('permissions', PermissionController::class);
+    Route::resource('permissions', PermissionController::class)->middleware('role:administrator');
 
     Route::get('/domain-requests/create', [DomainAccountRequestController::class, 'create'])->name('domain-requests.create');
     Route::post('/domain-requests', [DomainAccountRequestController::class, 'store'])->name('domain-requests.store');
@@ -35,18 +35,20 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/services/{service}/execute', [ServiceController::class, 'execute'])->name('services.execute');
 
-    Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
+    Route::get('/logs', [LogController::class, 'index'])->name('logs.index')->middleware('role:administrator|editor');
 
     // Ruta para el chatbot de asistencia
     Route::get('/chat',               [ChatController::class, 'index'])->name('chat.index');
     Route::post('/chat',              [ChatController::class, 'store'])->name('chat.store');
-    Route::get('/chat/check',         [ChatController::class, 'check'])->name('chat.check'); 
+    Route::get('/chat/check',         [ChatController::class, 'check'])->name('chat.check');
     Route::get('/chat/{chatMessage}', [ChatController::class, 'show'])->name('chat.show');
 
-    // Rutas para los reportes
-    Route::get('/reports/audit', [ReportsController::class, 'index'])->name('reports.audit');
-    Route::get('/reports/trends', [ReportsController::class, 'getServiceTrends'])->name('reports.trends');
-    Route::get('/reports/domain-requests', [ReportsController::class, 'domainAccountRequests'])->name('reports.domain_requests');
-    Route::get('/reports/usability', [ReportsController::class, 'usabilityCharts'])->name('reports.usability');
-    Route::get('/reports/agents', [ReportsController::class, 'agents'])->name('reports.agents');
+    Route::group(['middleware' => ['role:administrator|editor|director']], function () {
+        // Rutas para los reportes
+        Route::get('/reports/audit', [ReportsController::class, 'index'])->name('reports.audit');
+        Route::get('/reports/trends', [ReportsController::class, 'getServiceTrends'])->name('reports.trends');
+        Route::get('/reports/domain-requests', [ReportsController::class, 'domainAccountRequests'])->name('reports.domain_requests');
+        Route::get('/reports/usability', [ReportsController::class, 'usabilityCharts'])->name('reports.usability');
+        Route::get('/reports/agents', [ReportsController::class, 'agents'])->name('reports.agents');
+    });
 });

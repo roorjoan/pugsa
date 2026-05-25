@@ -88,6 +88,7 @@
                                 Dashboard
                             </a>
                         </li>
+                        @hasanyrole('administrator|especialista')
                         <li>
                             <a href="{{ route('users.index') }}"
                                 class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-200 transition-colors text-slate-600 font-medium">
@@ -99,6 +100,7 @@
                                 Gestión de usuarios
                             </a>
                         </li>
+                        
                         <li>
                             <a href="{{ route('services.index') }}"
                                 class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-200 transition-colors text-slate-600 font-medium">
@@ -132,6 +134,8 @@
                                 Gestión de servicios
                             </a>
                         </li>
+                        @endhasanyrole
+                        @hasanyrole('administrator')
                         <li>
                             <a href="{{ route('roles.index') }}"
                                 class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-200 transition-colors text-slate-600 font-medium">
@@ -203,6 +207,7 @@
                                 Gestión de permisos
                             </a>
                         </li>
+                        @endhasanyrole
                         <li>
                             <a href="{{ route('domain-requests.create') }}"
                                 class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-200 transition-colors text-slate-600 font-medium">
@@ -234,6 +239,7 @@
                                 Solicitud de cuentas
                             </a>
                         </li>
+                        @hasanyrole('administrator|especialista')
                         <li>
                             <a href="{{ route('logs.index') }}"
                                 class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-200 transition-colors text-slate-600 font-medium">
@@ -253,6 +259,7 @@
                                 Logs de usuarios
                             </a>
                         </li>
+                        @endhasanyrole
                         <li>
                             <a href="{{ route('chat.index') }}"
                                 class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-200 transition-colors text-slate-600 font-medium">
@@ -270,7 +277,7 @@
                                 Chatbot IA
                             </a>
                         </li>
-
+                        @hasanyrole('administrator|especialista|director')
                         <!-- Menu Reportes -->
                         <ul class="text-xs font-bold text-slate-400 tracking-wider mb-2">
                             <li>
@@ -441,6 +448,7 @@
                                 </details>
                             </li>
                         </ul>
+                        @endhasanyrole
                     </ul>
                 </div>
 
