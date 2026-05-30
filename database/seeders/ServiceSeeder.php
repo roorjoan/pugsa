@@ -35,13 +35,6 @@ class ServiceSeeder extends Seeder
                 'icon'        => '',
             ],
             [
-                'name'        => 'Servidor ION',
-                'type'        => 'remoto',
-                'path'        => '11.13.1.9',
-                'description' => 'Acceder al servidor del ION',
-                'icon'        => '',
-            ],
-            [
                 'name'        => 'Correo EEG',
                 'type'        => 'web',
                 'path'        => 'http://correo.elecgrm.une.cu/',

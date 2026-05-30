@@ -88,7 +88,7 @@
                                 Dashboard
                             </a>
                         </li>
-                        @hasanyrole('administrator|especialista')
+                        @hasanyrole(['administrator|especialista'])
                         <li>
                             <a href="{{ route('users.index') }}"
                                 class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-200 transition-colors text-slate-600 font-medium">
@@ -135,7 +135,7 @@
                             </a>
                         </li>
                         @endhasanyrole
-                        @hasanyrole('administrator')
+                        @hasanyrole(['administrator'])
                         <li>
                             <a href="{{ route('roles.index') }}"
                                 class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-200 transition-colors text-slate-600 font-medium">
@@ -239,7 +239,7 @@
                                 Solicitud de cuentas
                             </a>
                         </li>
-                        @hasanyrole('administrator|especialista')
+                        @hasanyrole(['administrator|especialista'])
                         <li>
                             <a href="{{ route('logs.index') }}"
                                 class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-200 transition-colors text-slate-600 font-medium">
@@ -277,7 +277,7 @@
                                 Chatbot IA
                             </a>
                         </li>
-                        @hasanyrole('administrator|especialista|director')
+                        @hasanyrole(['administrator|especialista|director'])
                         <!-- Menu Reportes -->
                         <ul class="text-xs font-bold text-slate-400 tracking-wider mb-2">
                             <li>
@@ -489,7 +489,7 @@
         </aside>
     </div>
     @stack('scripts')
-    {{-- Polling de respuestas del chatbot --}}
+    {{-- PAra respuestas del chatbot --}}
     @auth
         <script>
             (function() {

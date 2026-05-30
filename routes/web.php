@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/domain-requests/create', [DomainAccountRequestController::class, 'create'])->name('domain-requests.create');
     Route::post('/domain-requests', [DomainAccountRequestController::class, 'store'])->name('domain-requests.store');
-    Route::get('/domain-requests', [DomainAccountRequestController::class, 'index'])->name('domain-requests.index');
+    Route::get('/domain-requests', [DomainAccountRequestController::class, 'index'])->name('domain-requests.index')->middleware('can:listar solicitudes');
     Route::patch('/domain-requests/{domainRequest}/update', [DomainAccountRequestController::class, 'update'])->name('domain-requests.update');
 
     Route::get('/services/{service}/execute', [ServiceController::class, 'execute'])->name('services.execute');

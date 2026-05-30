@@ -7,7 +7,7 @@
         <div class="mb-6 border-b border-base-300 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <h1 class="text-2xl font-bold text-base-content mb-1">Accesos de Dominio</h1>
 
-            @role('administrator')
+            @can('listar solicitudes')
                 <a href="{{ route('domain-requests.index') }}"
                     class="btn btn-outline btn-sm border-[#5b21b6] text-[#5b21b6] hover:bg-[#5b21b6] hover:text-white rounded-lg shadow-sm gap-2 transition-colors">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -19,7 +19,7 @@
                     </svg>
                     Gestionar Solicitudes
                 </a>
-            @endrole
+            @endcan
         </div>
 
         <div class="card bg-base-100 shadow-sm max-w-2xl mx-auto border border-base-200 rounded-xl mt-8">
